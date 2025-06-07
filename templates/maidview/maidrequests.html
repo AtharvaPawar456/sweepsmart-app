@@ -1,0 +1,70 @@
+{% extends 'maidview/maidbase.html' %}
+
+{% block title %}Assigned Maid Requests{% endblock %}
+
+{% block content %}
+<meta http-equiv="refresh" content="20">
+
+<div class="max-w-7xl mx-auto mt-12 px-4 py-6">
+  <h2 class="text-2xl text-center font-extrabold text-blue-800 mb-10">
+    📝 Assigned Maid Requests
+  </h2>
+
+  {% if errorMessage %}
+  <div class="bg-red-100 border border-red-300 text-red-700 px-5 py-4 rounded-lg shadow mb-8">
+    {{ errorMessage }}
+  </div>
+
+  {% elif requestCards %}
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+    {% for item in requestCards %}
+    <div class="bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition duration-300 p-6">
+      <!-- Client Header -->
+      <div class="mb-4 border-b pb-3">
+        <h3 class="text-xl font-semibold text-gray-900">👤 {{ item.client.user.username }}</h3>
+        <p class="text-sm text-gray-500">Client Details</p>
+      </div>
+
+      <!-- Client Info -->
+      <ul class="text-sm text-gray-700 space-y-1">
+        <li><strong>📞 Contact:</strong> {{ item.client.contact }}</li>
+        <li><strong>🎂 Age:</strong> {{ item.client.age }}</li>
+        <li><strong>🗣️ Language:</strong> {{ item.client.language }}</li>
+        <li><strong>🛐 Religion:</strong> {{ item.client.religion }}</li>
+        <li><strong>📍 Address:</strong> {{ item.client.address }}</li>
+        <li><strong>📝 Metadata:</strong> {{ item.client.metadata }}</li>
+      </ul>
+
+      <!-- Request Status and Metadata -->
+      <div class="mt-6 border-t pt-4 text-sm text-gray-800">
+        <p class="mb-1"><strong class="text-blue-600">✅ Status:</strong> {{ item.status | title }}</p>
+        <p><strong class="text-blue-600">🗒️ Request:</strong> <br>{{ item.metadata }}</p>
+      </div>
+
+      {% if item.status == 'new' %}
+      <!-- Accept Button -->
+      <a href="/acceptstatus/{{ item.maidreqid }}"
+        class="block w-full mt-6 bg-green-600 hover:bg-green-700 text-white text-center py-2 rounded-md text-sm font-semibold shadow transition">
+        ✅ Accept Request
+      </a>
+      {% elif item.status == 'accepted' %}
+      <!-- Accept Button -->
+      <a href="/enterotp/{{ item.maidreqid }}"
+        class="block w-full mt-6 bg-green-600 hover:bg-green-700 text-white text-center py-2 rounded-md text-sm font-semibold shadow transition">
+        Enter OTP
+      </a>
+      {% endif %}
+
+
+
+    </div>
+    {% endfor %}
+  </div>
+
+  {% else %}
+  <div class="text-center mt-10 text-gray-500">
+    <p class="text-lg">📭 No maid requests assigned at the moment.</p>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

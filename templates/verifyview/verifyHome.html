@@ -1,0 +1,116 @@
+{% extends 'verifyview/verifyBase.html' %}
+
+{% block title %}Verification Dashboard{% endblock %}
+
+{% block content %}
+<meta http-equiv="refresh" content="10">
+
+<div class="max-w-7xl mx-auto px-4 my-14">
+  <h1 class="text-3xl font-bold mb-6 text-blue-600">Verification Dashboard</h1>
+
+  {% if error %}
+    <div class="bg-red-100 text-red-700 px-4 py-2 mb-6 rounded shadow">{{ error }}</div>
+  {% endif %}
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <div class="bg-white shadow p-4 rounded border border-yellow-400 border-4">
+      <p class="text-gray-600">Total Client</p>
+      <p class="text-2xl font-bold text-blue-700">{{ totalClientVerifications }}</p>
+    </div>
+    <div class="bg-white shadow p-4 rounded border border-yellow-400 border-4">
+      <p class="text-gray-600">Total Maid</p>
+      <p class="text-2xl font-bold text-blue-700">{{ totalMaidVerifications }}</p>
+    </div>
+    <div class="bg-green-100 shadow p-4 rounded">
+      <p class="text-gray-600">Verified Clients</p>
+      <p class="text-2xl font-bold text-green-800">{{ verifiedClients }}</p>
+    </div>
+    <div class="bg-green-100 shadow p-4 rounded">
+      <p class="text-gray-600">Verified Maids</p>
+      <p class="text-2xl font-bold text-green-800">{{ verifiedMaids }}</p>
+    </div>
+  </div>
+
+  <div class="w-full text-center py-4 px-4 rounded shadow mb-4 text-xl font-bold shadow shadow-md shadow-indigo-200 border-indigo-400 border-2">
+    <a href="/verifyaadhar" class="hover:text-blue-600 hover:underline">🗄️ View Aadhar database</a>
+    
+  </div>
+
+  <div class="mb-8">
+    <h2 class="text-xl font-semibold mb-3">Feedback [Latest {{ feedbackscount }}]</h2>
+    <a href="/viewFeedbackList" class="bg-blue-500 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md">View All</a>
+
+    <div class="bg-white shadow p-4 rounded space-y-2 mt-4">
+      {% for fb in feedbacks %}
+        <div class="border-b pb-2">
+          <p><span class="font-bold">Client:</span> {{ fb.clientid }}</p>
+          <p><span class="font-bold">Maid:</span> {{ fb.maidid }}</p>
+          <p><span class="text-gray-700">"{{ fb.feedback }}"</span></p>
+        </div>
+      {% empty %}
+        <p class="text-gray-500">No feedbacks available.</p>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="mb-8">
+    <h2 class="text-xl font-semibold mb-3">Complaints [Latest {{ complaintscount }}]</h2>
+    <a href="/verifyComplaints" class="bg-blue-500 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md">View All</a>
+
+    <div class="bg-white shadow p-4 rounded space-y-2 mt-4">
+      {% for complaint in complaints %}
+        <div class="border-b pb-2">
+          <p><span class="font-bold">Client:</span> {{ complaint.clientid }}</p>
+          <p><span class="font-bold">Maid:</span> {{ complaint.maidid }}</p>
+          <p class="text-red-600">{{ complaint.complaints }}</p>
+        </div>
+      {% empty %}
+        <p class="text-gray-500">No complaints submitted.</p>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="mb-8">
+    <h2 class="text-xl font-semibold mb-3">Contact us [Latest {{ contactusDataCount }}]</h2>
+    <a href="/verifycontact" class="bg-blue-500 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md">View All</a>
+    <div class="bg-white shadow p-4 rounded space-y-2 mt-4">
+      {% for contact in contactusData %}
+        <div class="border-b pb-2">
+          <p><span class="font-bold">User:</span> {{ contact.user.username }}</p>
+          <p><span class="font-bold">Msg:</span> {{ contact.msg }}</p>
+        </div>
+      {% empty %}
+        <p class="text-gray-500">No complaints submitted.</p>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div>
+    <h2 class="text-xl font-semibold mb-3">Notifications [Latest {{ notificationsCount }}]</h2>
+    <a href="/verifyNotifications" class="bg-blue-500 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md">View All</a>
+
+    <div class="bg-white shadow p-4 rounded space-y-2 mt-4">
+      {% for note in notifications %}
+        <div class="border-b pb-2">
+          <p>
+            <span class="font-bold">User: {{ note.user.username }} </span> 
+            <span class="mx-8">Number: {{ note.number }}</span>  
+
+            {% if note.metadata == 'new'%}
+
+            <span class="text-sm text-green-800 font-bold">Status: {{ note.metadata | title }}</span>
+            
+            {% else %}
+              <span class="text-sm text-yellow-800 font-bold">Status: {{ note.metadata | title }}</span>
+            {% endif %}
+
+          </p>
+          <p>Message : {{ note.msg }}</p>
+        </div>
+      {% empty %}
+        <p class="text-gray-500">No notifications available.</p>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

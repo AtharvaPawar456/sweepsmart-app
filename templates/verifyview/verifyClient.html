@@ -1,0 +1,54 @@
+{% extends 'verifyview/verifyBase.html' %}
+
+{% block title %}Client Profile Verification{% endblock %}
+
+{% block content %}
+<meta http-equiv="refresh" content="10">
+
+<div class="max-w-6xl mx-auto px-4 pt-16">
+  <h1 class="text-3xl font-bold mb-6 text-blue-700">
+    Client Verification → Unverified Clients:
+    <span class="text-gray-700">{{ pendingClientsCount }}</span>
+  </h1>
+
+  {% if pendingClients %}
+    <div class="bg-white shadow rounded-lg overflow-x-auto">
+      <div class="min-w-full">
+        <div class="grid grid-cols-7 font-semibold text-gray-700 bg-gray-100 border-b px-4 py-2 text-sm">
+          <div class="text-center">Sr. No</div>
+          <div>User</div>
+          <div>Contact</div>
+          <div>Age</div>
+          <div>Timestamp</div>
+          <div>Status</div>
+          <div>Action</div>
+        </div>
+
+        {% for client in pendingClients %}
+          <div class="grid grid-cols-7 items-center px-4 py-3 border-b hover:bg-gray-50 text-sm text-gray-800">
+            <div class="text-center">{{ forloop.counter }}</div>
+            <div class="truncate">{{ client.user.username }}</div>
+            <div class="truncate">{{ client.contact }}</div>
+            <div>{{ client.age }}</div>
+            <div class="text-xs text-gray-600">{{ client.timestamp|date:"Y-m-d H:i:s" }}</div>
+            <div class="{% if client.verifyStatus == 'rejected' %}text-red-600{% else %}text-yellow-600{% endif %} font-semibold">
+              {{ client.verifyStatus|title }}
+            </div>
+            <div>
+              <a href="/verifyprofile/{{ client.clientid }}"
+                class="bg-blue-600 hover:bg-blue-700 text-white text-xs px-4 py-2 rounded font-medium shadow">
+                🔍 View
+              </a>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+    </div>
+  {% else %}
+    <div class="bg-yellow-50 border-l-4 border-yellow-400 text-yellow-700 p-4 rounded shadow-sm mt-6">
+      <p>No pending clients found.</p>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

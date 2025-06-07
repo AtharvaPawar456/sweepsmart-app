@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0" /> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Secure Payment</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 flex flex-col items-center justify-center min-h-screen px-4 py-6">
+
+    <!-- Logo -->
+    <div class="mb-4">
+        <img src="data:image/png;base64,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"
+            alt="Payment Logo" class="w-14 h-auto mx-auto rounded-lg shadow-md" />
+    </div>
+
+    <!-- Payment Form -->
+    <form method="POST" action="{% url 'processPayment' maidReqId %}"
+        class="bg-white rounded-xl shadow-xl w-full max-w-md py-2 px-4 space-y-6">
+        {% csrf_token %}
+
+        <div class="text-center">
+            <h2 class="text-2xl font-bold text-gray-800">Sweep Smart Payment</h2>
+            <p class="text-gray-600 mt-1">Pay securely using your card</p>
+            <p class="text-lg text-blue-600 font-semibold mt-2">₹{{ amount }}</p>
+            <p class="text-sm text-gray-600 mt-2">Client : <span class="text-gray-800 font-medium">{{ clientname | title }}</span>
+            <p class="text-sm text-gray-600">Maid : <span class="text-gray-800 font-medium">{{ maidname | title }}</span></p>
+            </p>
+        </div>
+
+        <div class="space-y-4">
+            <div>
+                <label for="cardHolderName" class="block text-sm font-medium text-gray-700">Cardholder Name</label>
+                <input type="text" name="cardHolderName" id="cardHolderName" required
+                    class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="John Doe">
+            </div>
+
+            <div>
+                <label for="cardNumber" class="block text-sm font-medium text-gray-700">Card Number</label>
+                <input type="text" name="cardNumber" id="cardNumber" required pattern="\d{16}" maxlength="16"
+                    inputmode="numeric"
+                    class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="1234567890123456" title="Enter a valid 16-digit card number">
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <!-- Expiry (MMYY) -->
+                <div>
+                    <label for="expiry" class="block text-sm font-medium text-gray-700">Expiry (MMYY)</label>
+                    <input type="text" name="expiry" id="expiry" required pattern="\d{4}" maxlength="4"
+                        inputmode="numeric"
+                        class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="MMYY" title="Enter 4 digits in MMYY format">
+                </div>
+
+                <!-- CVC -->
+                <div>
+                    <label for="cvc" class="block text-sm font-medium text-gray-700">CVC</label>
+                    <input type="text" name="cvc" id="cvc" required pattern="\d{3}" maxlength="3" inputmode="numeric"
+                        class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="123" title="Enter a valid 3-digit CVC">
+                </div>
+
+            </div>
+        </div>
+
+        <button type="submit"
+            class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-md transition duration-200">
+            Pay ₹{{ amount }}
+        </button>
+    </form>
+
+    <!-- Footer -->
+    <footer class="text-center mt-6 text-sm text-gray-500">
+        <p>
+            By proceeding, you agree to the
+            <a href="https://stripe.com/legal" class="text-blue-600 hover:underline" target="_blank"
+                rel="noopener noreferrer">
+                Stripe Terms & Conditions
+            </a>.
+        </p>
+        <p class="mt-2">&copy; {{ currentYear }} MaidPay System. All rights reserved.</p>
+    </footer>
+
+</body>
+
+</html>

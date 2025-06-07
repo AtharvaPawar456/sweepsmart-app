@@ -1,0 +1,98 @@
+{% extends "verifyview/verifyBase.html" %}
+{% block title %}Verify Aadhar{% endblock %}
+{% block content %}
+<meta http-equiv="refresh" content="10">
+
+<div class="max-w-5xl mx-auto px-4 my-8">
+
+  <!-- Aadhar Form -->
+  <form method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-10 border">
+    {% csrf_token %}
+    <h2 class="text-xl font-bold mb-4">Add Aadhar Info</h2>
+
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="fullname">Full Name</label>
+      <input name="fullname" type="text" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700" />
+    </div>
+
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="dob">Date of Birth</label>
+      <input name="dob" type="date" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700" />
+    </div>
+
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="gender">Gender</label>
+      <select name="gender" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700">
+        <option value="">Select</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="aadharno">Aadhar Number</label>
+      <input name="aadharno" type="text" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700" />
+    </div>
+
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="metadata">Metadata</label>
+      <textarea name="metadata" rows="3" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700"></textarea>
+    </div>
+
+    <div class="flex justify-end">
+      <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+        Submit
+      </button>
+    </div>
+  </form>
+
+  <!-- Aadhar Data View -->
+
+  <!-- Desktop Table -->
+  <div class="hidden md:block">
+    <h2 class="text-lg font-semibold mb-2 text-center">All Aadhar Records</h2>
+    <table class="min-w-full bg-white border rounded text-center">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="py-2 px-4 border-b">Full Name</th>
+          <th class="py-2 px-4 border-b">DOB</th>
+          <th class="py-2 px-4 border-b">Gender</th>
+          <th class="py-2 px-4 border-b">Aadhar No</th>
+          <!-- <th class="py-2 px-4 border-b">Metadata</th> -->
+        </tr>
+      </thead>
+      <tbody>
+        {% for entry in aadharList %}
+        <tr class="hover:bg-gray-50">
+          <td class="py-2 px-4 border-b">{{ entry.fullname }}</td>
+          <td class="py-2 px-4 border-b">{{ entry.dob }}</td>
+          <td class="py-2 px-4 border-b">{{ entry.gender }}</td>
+          <td class="py-2 px-4 border-b">{{ entry.aadharno }}</td>
+          <!-- <td class="py-2 px-4 border-b">{{ entry.metadata }}</td> -->
+        </tr>
+        {% empty %}
+        <tr><td colspan="5" class="text-center text-gray-500 py-4">No records found.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Mobile Card View -->
+  <div class="block md:hidden space-y-4">
+    {% for entry in aadharList %}
+    <div class="bg-white border shadow rounded p-4">
+      <p><strong>Name:</strong> {{ entry.fullname }}</p>
+      <p><strong>DOB:</strong> {{ entry.dob }}</p>
+      <p><strong>Gender:</strong> {{ entry.gender }}</p>
+      <p><strong>Aadhar:</strong> {{ entry.aadharno }}</p>
+      <p><strong>Metadata:</strong> {{ entry.metadata }}</p>
+    </div>
+    {% empty %}
+    <p class="text-center text-gray-500">No records found.</p>
+    {% endfor %}
+  </div>
+
+</div>
+
+{% endblock %}

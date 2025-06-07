@@ -1,0 +1,78 @@
+{% extends 'verifyview/verifyBase.html' %}
+{% block title %}Maid Profile Verification{% endblock %}
+
+{% block content %}
+<meta http-equiv="refresh" content="20">
+
+<div class="max-w-6xl mx-auto px-4 pt-16">
+  <h1 class="text-3xl font-bold mb-6 text-blue-700">
+    Maid Verification → Unverified Maids:
+    <span class="text-gray-700">{{ pendingMaidsCount }}</span>
+  </h1>
+
+  {% if showSuccessCard %}
+  <div id="successCard" style="padding: 20px; background-color: #d4edda; border: 1px solid #c3e6cb; color: #155724; margin: 20px 0;">
+      ✅ Aadhaar Auto Verified Successfully! Redirecting...
+  </div>
+
+  <script>
+      // Redirect after 4 seconds (4000 ms)
+      setTimeout(function () {
+          window.location.href = "/verifymaid/";
+      }, 4000);
+  </script>
+  {% endif %}
+
+  {% if message %}
+  <p class="bg-indigo-100 border-l-4 border-red-500 text-indigo-800 p-4">{{ message }}</p>
+
+  
+  <script>
+      // Redirect after 4 seconds (4000 ms)
+      setTimeout(function () {
+          window.location.href = "/verifymaid/";
+      }, 4000);
+  </script>
+  {% endif %}
+
+
+  {% if pendingMaids %}
+    <div class="bg-white shadow rounded-lg overflow-x-auto">
+      <div class="min-w-full">
+        <div class="grid grid-cols-7 font-semibold text-gray-700 bg-gray-100 border-b px-4 py-2 text-sm">
+          <div class="text-center">Sr. No</div>
+          <div>User</div>
+          <div>Contact</div>
+          <div>Age</div>
+          <div>Timestamp</div>
+          <div>Status</div>
+          <div>Action</div>
+        </div>
+
+        {% for maid in pendingMaids %}
+          <div class="grid grid-cols-7 items-center px-4 py-3 border-b hover:bg-gray-50 text-sm text-gray-800">
+            <div class="text-center">{{ forloop.counter }}</div>
+            <div class="truncate">{{ maid.user.username }}</div>
+            <div class="truncate">{{ maid.contact }}</div>
+            <div>{{ maid.age }}</div>
+            <div class="text-xs text-gray-600">{{ maid.timestamp|date:"Y-m-d H:i:s" }}</div>
+            <div class="{% if maid.verifyStatus == 'rejected' %}text-red-600{% else %}text-yellow-600{% endif %} font-semibold">
+              {{ maid.verifyStatus|title }}
+            </div>
+            <div>
+              <a href="{% url 'viewmaidprofile' maid.maidid %}"
+                class="bg-blue-600 hover:bg-blue-700 text-white text-xs px-4 py-2 rounded font-medium shadow">
+                🔍 View
+              </a>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% else %}
+    <div class="bg-yellow-50 border-l-4 border-yellow-400 text-yellow-700 p-4 rounded shadow-sm mt-6">
+      <p>No pending maids found.</p>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

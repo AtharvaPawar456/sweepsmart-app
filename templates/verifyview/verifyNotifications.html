@@ -1,0 +1,42 @@
+{% extends 'verifyview/verifyBase.html' %}
+
+{% block title %}Notification List{% endblock %}
+
+{% block content %}
+<meta http-equiv="refresh" content="10">
+
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-12">
+  <h1 class="text-3xl font-bold text-gray-800 mb-8 border-b pb-2 flex items-center gap-2">
+    <span class="text-green-600">🔔</span> All Notifications ({{ notificationListCount }})
+  </h1>
+
+  {% if notificationList %}
+    <ul class="space-y-6">
+      {% for note in notificationList %}
+        <li class="bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300">
+          <div class="p-5">
+            <div class="flex flex-col gap-1 text-sm text-gray-700">
+              <div>
+                <span class="font-medium text-gray-900">👤 User:</span> {{ note.user.username }}
+                
+                <span class="mx-8">
+                    <span class="font-medium text-gray-900 ">📞 Number:</span> {{ note.number }}
+                </span>
+
+                <span class="font-medium text-gray-900 ">🗂️ Metadata:</span> {{ note.metadata }}
+            </div>
+            <div class="text-md text-gray-800 mt-2">
+                <span class="font-medium text-gray-900 ">💬 Message:</span> {{ note.msg }}
+              </div>
+            </div>
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <div class="bg-yellow-50 border-l-4 border-yellow-400 text-yellow-800 p-4 rounded">
+      <p>No notifications found.</p>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

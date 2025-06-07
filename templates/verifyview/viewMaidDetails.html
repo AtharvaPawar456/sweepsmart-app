@@ -1,0 +1,60 @@
+{% extends 'verifyview/verifyBase.html' %}
+{% block title %}Maid Profile{% endblock %}
+
+{% block content %}
+<meta http-equiv="refresh" content="10">
+
+<div class="max-w-4xl mx-auto my-10 bg-white shadow-md rounded-lg overflow-hidden">
+  <div class="bg-blue-600 px-6 py-4">
+    <h2 class="text-white text-2xl font-bold">Maid Profile Details</h2>
+  </div>
+
+  {% if errorMessage %}
+    <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4">
+      {{ errorMessage }}
+    </div>
+  {% else %}
+    <div class="p-6 grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+      <div class="col-span-1 flex justify-center">
+        <img src="data:image/jpeg;base64,{{ profileImg }}" 
+             alt="Profile Image"
+             class="w-40 h-40 rounded-full border-4 border-blue-500 shadow-md object-cover" />
+      </div>
+
+      <div class="col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-800">
+        <div><p class="text-sm font-medium text-gray-500">Username</p><p class="text-lg font-semibold">{{ maidDetails.user.username }}</p></div>
+        <div><p class="text-sm font-medium text-gray-500">Contact</p><p class="text-lg">{{ maidDetails.contact }}</p></div>
+        <div><p class="text-sm font-medium text-gray-500">Age</p><p class="text-lg">{{ maidDetails.age }}</p></div>
+        <div><p class="text-sm font-medium text-gray-500">Language</p><p class="text-lg">{{ maidDetails.language }}</p></div>
+        <div><p class="text-sm font-medium text-gray-500">Religion</p><p class="text-lg">{{ maidDetails.religion }}</p></div>
+        <div><p class="text-sm font-medium text-gray-500">Verification Status</p><p class="text-lg font-semibold 
+            {% if maidDetails.verifyStatus == 'pending' %}text-yellow-600{% else %}text-green-600{% endif %}">
+            {{ maidDetails.verifyStatus|title }}</p></div>
+        <div class="sm:col-span-2"><p class="text-sm font-medium text-gray-500">Address</p><p class="text-lg break-words">{{ maidDetails.address }}</p></div>
+        <div><p class="text-sm font-medium text-gray-500">Latitude</p><p class="text-lg">{{ maidDetails.mapLat }}</p></div>
+        <div><p class="text-sm font-medium text-gray-500">Longitude</p><p class="text-lg">{{ maidDetails.mapLong }}</p></div>
+        <div class="sm:col-span-2"><p class="text-sm font-medium text-gray-500">Registered On</p><p class="text-lg">{{ maidDetails.timestamp|date:"Y-m-d H:i:s" }}</p></div>
+      </div>
+    </div>
+
+    {% if verifyDetails %}
+    <div class="border-t mt-6 pt-6 px-6">
+      <h3 class="text-xl font-bold text-blue-600 mb-4">Aadhaar Verification</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div><p class="text-sm text-gray-500">Aadhaar Number</p><p class="text-lg font-medium">{{ verifyDetails.addharno }}</p></div>
+        <div><p class="text-sm text-gray-500">Verification Status</p><p class="text-lg font-medium text-yellow-600">{{ verifyDetails.verifyStatus|title }}</p></div>
+        <div class="md:col-span-2"><p class="text-sm text-gray-500 mb-1">Aadhaar Image</p><img src="data:image/jpeg;base64,{{ verifyDetails.addharbaseimg }}" 
+             alt="Aadhaar" class="w-60 border rounded shadow"></div>
+      </div>
+    </div>
+    {% endif %}
+
+    <div class="my-6 flex justify-center space-x-4">
+        <a href="{% url 'updateMaidVerifyStatus' maidDetails.maidid 'verified' %}" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded shadow text-sm font-medium">✅ Approve</a>
+        <a href="{% url 'updateMaidVerifyStatus' maidDetails.maidid 'rejected' %}" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded shadow text-sm font-medium">❌ Reject</a>
+        <a href="{% url 'autoverify' maidDetails.user.username  %}" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded shadow text-sm font-medium">✅ Auto Verify</a>
+    </div>
+
+  {% endif %}
+</div>
+{% endblock %}

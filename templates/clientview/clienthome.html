@@ -1,0 +1,46 @@
+{% extends 'clientview/clientbase.html' %}
+
+{% block content %}
+<meta http-equiv="refresh" content="10">
+
+<div class="bg-gray-50 min-h-screen py-4 px-6">
+    <div class="max-w-7xl mx-auto">
+        <h1 class="text-xl font-bold text-gray-800 mb-8 text-center">Available Verified Maids</h1>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% if maidCards %}
+                {% for maid in maidCards %}
+                <div class="bg-white rounded-xl shadow-md border border-gray-200 hover:shadow-lg transition duration-300">
+                    <img class="w-full h-52 object-cover rounded-t-xl" src="data:image/jpeg;base64,{{ maid.profileImg }}" alt="Maid Image">
+                    <div class="p-5 space-y-2">
+                        <h2 class="text-xl font-semibold text-indigo-700">{{ maid.username }}</h2>
+
+                        <div class="text-sm text-gray-600 space-y-1">
+                            <p><span class="font-medium">⭐ Rating:</span> {{ maid.ratingvalue }}</p>
+                            <p><span class="font-medium">🙏 Contact:</span> {{ maid.mymaidcontact }}</p>
+                            <!-- <p><span class="font-medium">🧹 Services:</span> {{ maid.services }}</p>
+                            <p><span class="font-medium">📦 Plan Type:</span> {{ maid.planTypeList }}</p>
+                            <p><span class="font-medium">💬 Experience:</span> {{ maid.msg }}</p>
+                            <p><span class="font-medium">🛠️ Other Services:</span> {{ maid.metadata }}</p> -->
+                        </div>
+                        <a href="/clientviewmaidprof/{{maid.mymaidid}}" 
+                        class="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-sm font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out">
+                            View Profile
+                        </a>
+                        <!-- <a href="/applymaid/{{maid.mymaidid}}" 
+                        class="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-sm font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out">
+                            ➕ Apply Now
+                        </a> -->
+
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-span-3 text-center py-16">
+                    <p class="text-lg text-gray-500">No verified maids available at the moment. Please check back later.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

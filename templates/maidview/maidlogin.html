@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0" /> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Login - Maid App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 flex items-center justify-center min-h-screen px-4">
+
+    <div class="bg-white shadow-md rounded-md w-full max-w-sm p-6">
+        <h2 class="text-xl font-bold text-center mb-4">
+            Sweep Smart
+            <i class="p-1 bg-gray-100 rounded-md text-green-600">Maid Login</i>
+        </h2>
+
+        {% if error %}
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded mb-4 text-sm">
+            {{ error }}
+        </div>
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+
+
+            <div class="mb-4">
+                <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
+                <input type="text" id="username" name="username" required placeholder="Username" oninput="this.value = this.value.toLowerCase()"
+                    class="w-full mt-1 px-3 py-2 border rounded-md focus:ring focus:outline-none" />
+            </div>
+
+            <div class="mb-4 relative">
+                <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                <input type="password" id="passwordInput" name="password" required
+                    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).{6,}$"
+                    title="Password must be at least 6 characters and include uppercase, lowercase, number, and symbol."
+                    class="w-full mt-1 px-3 py-2 border rounded-md focus:ring focus:outline-none pr-10" />
+                <button type="button" onclick="togglePasswordVisibility()" class="absolute right-2 top-9 text-gray-600">
+                    <!-- Heroicon Eye Icon -->
+                    <svg id="eyeIcon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                    </svg>
+                </button>
+                <div class="mt-2 text-right">
+                    <a href="/forgotpassword" class="text-sm text-blue-600 hover:underline">Forgot Password?</a>
+                </div>
+            </div>
+
+            <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700">Login</button>
+        </form>
+
+
+        <p class="text-sm text-center mt-4">
+            Don't have an account?
+            <a href="/maidregister" class="text-blue-600 hover:underline">Maid Register</a>
+        </p>
+
+        <div class="text-center mt-4">
+            <a href="/home" class="text-blue-600 hover:underline">🏠 Home</a>
+        </div>
+    </div>
+
+    <script>
+        /**
+         * togglePasswordVisibility
+         * Toggles the password input visibility and updates the icon
+         * Input: none
+         * Output: none
+         */
+        function togglePasswordVisibility() {
+            try {
+                const passwordInput = document.getElementById("passwordInput");
+                const eyeIcon = document.getElementById("eyeIcon");
+                const isPassword = passwordInput.type === "password";
+
+                passwordInput.type = isPassword ? "text" : "password";
+
+                // Optionally change the icon to eye-off (for feedback)
+                eyeIcon.innerHTML = isPassword
+                    ? `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+               d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.542-7a10.056 10.056 0 011.658-2.572M4.22 4.22l15.56 15.56M9.88 9.88a3 3 0 104.24 4.24"/>`
+                    : `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+               d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+               d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />`;
+
+            } catch (error) {
+                console.error("Error toggling password visibility:", error);
+            }
+        }
+    </script>
+</body>
+
+</html>

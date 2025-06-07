@@ -1,0 +1,24 @@
+{% extends 'verifyview/verifyBase.html' %}
+
+{% block title %}Contact List{% endblock %}
+
+{% block content %}
+<meta http-equiv="refresh" content="10">
+
+<div class="max-w-4xl mx-auto p-4 mt-10">
+  <h1 class="text-2xl font-semibold mb-4 text-blue-600">📞 Contact Messages ({{ contactListCount }})</h1>
+
+  {% if contactList %}
+    <ul class="space-y-4">
+      {% for contact in contactList %}
+        <li class="border p-4 rounded shadow bg-white">
+          <div class="font-semibold text-gray-800">👤 {{ contact.user.username }}</div>
+          <div class="text-gray-700 mt-1">💬 {{ contact.msg }}</div>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="text-gray-500">No contact messages found.</p>
+  {% endif %}
+</div>
+{% endblock %}

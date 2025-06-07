@@ -1,0 +1,50 @@
+{% extends 'maidview/maidbase.html' %}
+
+{% block content %}
+<meta http-equiv="refresh" content="20">
+
+<div class="bg-gray-100 min-h-screen py-10 px-4 flex items-center justify-center">
+
+    {% if latitude or longitude %}
+
+    <div class="bg-white p-6 rounded shadow w-full max-w-2xl">
+        <h2 class="text-2xl font-bold mb-4 text-center">Your GPS Location</h2>
+        <p class="text-center text-sm text-red-600 font-bold mb-4"><strong>Allow GPS permission to this app to view your location.</strong></p>
+
+        <form method="POST">
+            {% csrf_token %}
+            <div class="mb-4">
+                <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
+                <input type="text" id="username" name="username" required value="{{ request.user }}"
+                    class="w-full mt-1 px-3 py-2 border rounded-md focus:ring focus:outline-none" />
+            </div>
+            <div class="mb-4">
+                <label for="latitude" class="block text-sm font-medium text-gray-700">Latitude</label>
+                <input type="number" step="any" id="latitude" name="latitude" required value="{{ latitude }}" min="0.000001"
+                    class="w-full mt-1 px-3 py-2 border rounded-md focus:ring focus:outline-none" />
+            </div>
+            <div class="mb-4">
+                <label for="longitude" class="block text-sm font-medium text-gray-700">Longitude</label>
+                <input type="number" step="any" id="longitude" name="longitude" required value="{{ longitude }}" min="0.000001"
+                    class="w-full mt-1 px-3 py-2 border rounded-md focus:ring focus:outline-none" />
+            </div>
+            <button type="submit"
+                class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Submit</button>
+        </form>
+
+    </div>
+
+    {% else %}
+
+    <div class="bg-white p-6 rounded shadow w-full max-w-2xl">
+        <h2 class="text-2xl font-bold mb-4 text-center">Your Location</h2>
+        <p class="text-center text-gray-600">Latitude: Not available</p>
+        <p class="text-center text-gray-600">Longitude: Not available</p>
+    </div>
+
+    {% endif %}
+
+
+
+</div>
+{% endblock %}

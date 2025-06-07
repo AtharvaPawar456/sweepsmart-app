@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Location Capture Successful</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.1/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-br from-green-100 to-white min-h-screen flex items-center justify-center">
+
+    <div class="bg-white shadow-lg rounded-lg p-8 max-w-md w-full text-center">
+        <div class="flex flex-col items-center space-y-4">
+            <svg class="w-16 h-16 text-green-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+
+            <h2 class="text-2xl font-bold text-green-600">Location Capture Successful!</h2>
+
+            <p class="text-sm text-gray-500 mt-6">Redirecting in 5 seconds...</p>
+        </div>
+    </div>
+
+    <script>
+        setTimeout(() => {
+            window.location.href = "/clientapplied/";
+        }, 5000);
+    </script>
+
+</body>
+</html>

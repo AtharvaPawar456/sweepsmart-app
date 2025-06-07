@@ -1,0 +1,82 @@
+{% extends "clientview/clientbase.html" %}
+{% block title %}Rate Maid{% endblock %}
+{% block content %}
+
+<div class="max-w-xl mx-auto mt-10 bg-white p-6 rounded-lg shadow-md">
+  <h2 class="text-2xl font-bold mb-4 text-blue-700">Rate Your Maid</h2>
+
+  <form method="POST" class="space-y-4">
+    {% csrf_token %}
+
+    <!-- Maid Selection Dropdown -->
+    <div>
+      <label class="block text-sm font-medium mb-1">Select Maid</label>
+      <select name="maidId" class="w-full border border-gray-300 rounded-md p-2" required>
+        <option value="">-- Choose a Maid --</option>
+        {% for maid in maids %}
+          <option value="{{ maid.maidid }}">{{ maid.user.username }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <!-- Star Rating UI -->
+    <div>
+      <label class="block text-sm font-medium mb-1">Rating (out of 5)</label>
+      <div class="flex space-x-1">
+        {% for i in "12345" %}
+          <svg data-value="{{ forloop.counter }}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor" class="w-8 h-8 cursor-pointer text-gray-300 hover:text-yellow-400 transition duration-200 star">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.905c.969 0 1.371 1.24.588 1.81l-3.974 2.89a1 1 0 00-.364 1.118l1.518 4.674c.3.921-.755 1.688-1.54 1.118l-3.974-2.89a1 1 0 00-1.175 0l-3.974 2.89c-.784.57-1.838-.197-1.54-1.118l1.518-4.674a1 1 0 00-.364-1.118l-3.974-2.89c-.783-.57-.38-1.81.588-1.81h4.905a1 1 0 00.95-.69l1.519-4.674z" />
+          </svg>
+        {% endfor %}
+      </div>
+      <input type="hidden" name="ratingValue" id="ratingValue" required>
+      <p class="text-sm text-red-500 hidden mt-1" id="ratingError">Please select a rating.</p>
+    </div>
+
+    <!-- Submit Button -->
+    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+      Submit Rating
+    </button>
+  </form>
+
+  {% if messages %}
+  <div class="mt-4 bg-yellow-100 p-4 rounded">
+      {% for message in messages %}
+        <p class="text-sm {{ message.tags }}">{{ message }}</p>
+      {% endfor %}
+    </div>
+  {% endif %}
+</div>
+
+<script>
+  const stars = document.querySelectorAll('.star');
+  const ratingInput = document.getElementById('ratingValue');
+  const ratingError = document.getElementById('ratingError');
+
+  stars.forEach((star, idx) => {
+    star.addEventListener('click', () => {
+      const rating = idx + 1;
+      ratingInput.value = rating;
+      ratingError.classList.add('hidden');
+
+      // Update star UI
+      stars.forEach((s, i) => {
+        s.classList.toggle('text-yellow-400', i < rating);
+        s.classList.toggle('text-gray-300', i >= rating);
+      });
+    });
+  });
+
+  // Optional: Add form submission validation
+  document.querySelector('form').addEventListener('submit', e => {
+    if (!ratingInput.value) {
+      ratingError.classList.remove('hidden');
+      e.preventDefault();
+    }
+  });
+</script>
+
+{% endblock %}
+

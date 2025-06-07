@@ -1,0 +1,117 @@
+{% extends 'maidview/maidbase.html' %}
+
+{% block title %}Maid Dashboard . Overview{% endblock %}
+
+{% block content %}
+<meta http-equiv="refresh" content="6">
+
+<div class="max-w-7xl mx-auto my-10 px-4">
+  {% if errorMsg %}
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">
+      <strong class="font-semibold">Error:</strong> {{ errorMsg }}
+    </div>
+  {% endif %}
+
+  <h1 class="text-3xl font-semibold text-gray-800 mb-8">Dashboard Overview</h1>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    
+    <!-- Card: Ratings -->
+    <div class="bg-white border border-gray-200 rounded-xl shadow hover:shadow-md transition duration-300 p-5">
+      <div class="flex items-center space-x-4">
+        <div class="bg-blue-100 p-3 rounded-full">
+          <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" stroke-width="2"
+               viewBox="0 0 24 24">
+            <path d="M12 4.354a4 4 0 014 0l3 1.732A4 4 0 0120 9v6a4 4 0 01-1 2.646l-3 1.732a4 4 0 01-4 0l-3-1.732A4 4 0 014 15V9a4 4 0 011-2.646l3-1.732a4 4 0 014 0z" />
+          </svg>
+        </div>
+        <div>
+          <p class="text-gray-500 text-sm">Total Ratings</p>
+          <p class="text-2xl font-bold text-gray-800">{{ totalRatings }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card: Requests -->
+    <div class="bg-white border border-gray-200 rounded-xl shadow hover:shadow-md transition duration-300 p-5">
+      <div class="flex items-center space-x-4">
+        <div class="bg-green-100 p-3 rounded-full">
+          <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" stroke-width="2"
+               viewBox="0 0 24 24">
+            <path d="M3 10h11M9 21V3m0 0L5 7m4-4l4 4" />
+          </svg>
+        </div>
+        <div>
+          <p class="text-gray-500 text-sm">Maid Requests</p>
+          <p class="text-2xl font-bold text-gray-800">{{ totalRequests }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card: Transactions -->
+    <div class="bg-white border border-gray-200 rounded-xl shadow hover:shadow-md transition duration-300 p-5">
+      <div class="flex items-center space-x-4">
+        <div class="bg-yellow-100 p-3 rounded-full">
+          <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" stroke-width="2"
+               viewBox="0 0 24 24">
+            <path d="M12 8c-2.209 0-4 1.343-4 3s1.791 3 4 3 4-1.343 4-3-1.791-3-4-3zm0-5a1 1 0 011 1v2a1 1 0 01-2 0V4a1 1 0 011-1zm0 14a1 1 0 011 1v2a1 1 0 01-2 0v-2a1 1 0 011-1z" />
+          </svg>
+        </div>
+        <div>
+          <p class="text-gray-500 text-sm">Transactions</p>
+          <p class="text-2xl font-bold text-gray-800">{{ totalTransactions }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card: Services -->
+    <div class="bg-white border border-gray-200 rounded-xl shadow hover:shadow-md transition duration-300 p-5">
+      <div class="flex items-center space-x-4">
+        <div class="bg-purple-100 p-3 rounded-full">
+          <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" stroke-width="2"
+               viewBox="0 0 24 24">
+            <path d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </div>
+        <div>
+          <p class="text-gray-500 text-sm">Services</p>
+          <p class="text-2xl font-bold text-gray-800">{{ totalServices }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card: Feedbacks -->
+    <div class="bg-white border border-gray-200 rounded-xl shadow hover:shadow-md transition duration-300 p-5">
+      <div class="flex items-center space-x-4">
+        <div class="bg-pink-100 p-3 rounded-full">
+          <svg class="w-6 h-6 text-pink-600" fill="none" stroke="currentColor" stroke-width="2"
+               viewBox="0 0 24 24">
+            <path d="M7 8h10M7 12h4m1 8l-5-5H4a2 2 0 01-2-2V5a2 2 0 012-2h16a2 2 0 012 2v8a2 2 0 01-2 2h-3l-5 5z" />
+          </svg>
+        </div>
+        <div>
+          <p class="text-gray-500 text-sm">Feedbacks</p>
+          <p class="text-2xl font-bold text-gray-800">{{ totalFeedbacks }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card: Complaints -->
+    <div class="bg-white border border-gray-200 rounded-xl shadow hover:shadow-md transition duration-300 p-5">
+      <div class="flex items-center space-x-4">
+        <div class="bg-red-100 p-3 rounded-full">
+          <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" stroke-width="2"
+               viewBox="0 0 24 24">
+            <path d="M12 9v2m0 4h.01M5.58 16.89A9.935 9.935 0 013 12c0-5.52 4.48-10 10-10s10 4.48 10 10a9.935 9.935 0 01-2.58 6.89L12 21l-6.42-4.11z" />
+          </svg>
+        </div>
+        <div>
+          <p class="text-gray-500 text-sm">Complaints</p>
+          <p class="text-2xl font-bold text-gray-800">{{ totalComplaints }}</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}
